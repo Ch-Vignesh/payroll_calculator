@@ -39,13 +39,13 @@ async def get_payrolls():
     payrolls = await retrieve_payrolls()
     return payrolls
 
-# Update a payroll record by id
-@router.put("/payrolls/{payroll_id}")
-async def update_payroll_endpoint(payroll_id: str, data: dict):
-    updated = await update_payroll(payroll_id, data)
-    if updated:
-        return {"message": "Payroll updated successfully"}
-    raise HTTPException(status_code=404, detail="Payroll not found")
+# # Update a payroll record by id
+# @router.put("/payrolls/{payroll_id}")
+# async def update_payroll_endpoint(payroll_id: str, data: dict):
+#     updated = await update_payroll(payroll_id, data)
+#     if updated:
+#         return {"message": "Payroll updated successfully"}
+#     raise HTTPException(status_code=404, detail="Payroll not found")
 
 # Delete a payroll record by id
 @router.delete("/payrolls/{payroll_id}")

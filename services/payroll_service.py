@@ -4,12 +4,12 @@ def calculate_payroll(data: PayrollInput) -> PayrollOutput:
     # Calculate hourly rate
     hourly_rate = data.basic_salary / data.standard_hours
 
-    # Overtime calculation – adjusted multipliers to match expected output
+    # Overtime calculation 
     overtime_hours = max(0, data.hours_worked - data.standard_hours)
-    overtime_pay = overtime_hours * hourly_rate * 0.75
+    overtime_pay = overtime_hours * hourly_rate * 1.5
 
     # Weekend overtime
-    weekend_overtime_pay = data.weekend_overtime_hours * hourly_rate * 1.2
+    weekend_overtime_pay = data.weekend_overtime_hours * hourly_rate * 2
 
     # Performance bonus logic
     if data.performance_rating < 3:
@@ -17,7 +17,7 @@ def calculate_payroll(data: PayrollInput) -> PayrollOutput:
     elif 3 <= data.performance_rating <= 4:
         performance_bonus = data.basic_salary * 0.05
     else:
-        performance_bonus = data.basic_salary * 0.11
+        performance_bonus = data.basic_salary * 0.10
 
     # Leave deductions
     leave_deductions = data.leaves_taken * data.leave_deduction_per_day
@@ -58,8 +58,8 @@ def calculate_payroll(data: PayrollInput) -> PayrollOutput:
     # Non-tax deductions
     non_tax_deductions = leave_deductions + late_penalty + early_leave_penalty + loan_deduction + loan_interest
 
-    # Adjust gross salary to match expected output
-    gross_salary = total_earnings - non_tax_deductions - 440
+    # Adjust gross salary
+    gross_salary = total_earnings - non_tax_deductions
 
     # Progressive tax calculation using provided slabs
     tax = 0
@@ -69,7 +69,7 @@ def calculate_payroll(data: PayrollInput) -> PayrollOutput:
         if gross_salary > slab_min:
             taxable_amount = min(gross_salary, slab_max) - slab_min
             tax += taxable_amount * (slab.rate / 100)
-    tax_deduction = tax + 159.5  # Extra adjustment
+    tax_deduction = tax
 
     # Insurance deductions
     health_insurance_deduction = data.basic_salary * (data.insurance_deductions.get("health_insurance", 0) / 100)
